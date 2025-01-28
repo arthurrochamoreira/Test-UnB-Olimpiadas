@@ -25,3 +25,4 @@ int main() {
 
 // Resultado da função Q1 para o nome 'moreira': 28
 // Resultado da função Q1 para o nome 'altino arthur rocha moreira': 378
+// O(n²)
