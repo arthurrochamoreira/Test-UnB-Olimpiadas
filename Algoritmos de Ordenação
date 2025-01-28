@@ -1,0 +1,129 @@
+Para identificar rapidamente cada algoritmo de ordenação em uma prova, você pode observar características específicas do código, como estrutura, abordagem e principais operações. Aqui estão dicas rápidas para cada um deles:
+
+1. Bubble Sort
+	•	Características:
+	•	Usa dois loops aninhados.
+	•	Troca elementos adjacentes se estiverem fora de ordem.
+	•	Verifica repetidamente toda a lista até que nenhum elemento precise ser trocado.
+	•	Dica para identificar:
+Procure um código com for ou while aninhado e uma condição como:
+
+if (array[j] > array[j + 1]) {
+    swap(array[j], array[j + 1]);
+}
+
+2. Selection Sort
+	•	Características:
+	•	Seleciona o menor (ou maior) elemento a cada iteração e coloca-o na posição correta.
+	•	Usa dois loops, sendo um para iterar e outro para encontrar o menor elemento.
+	•	Dica para identificar:
+Procure por algo assim:
+
+min_index = i;
+for (j = i + 1; j < n; j++) {
+    if (array[j] < array[min_index]) {
+        min_index = j;
+    }
+}
+swap(array[i], array[min_index]);
+
+3. Insertion Sort
+	•	Características:
+	•	Divide o array em duas partes: uma ordenada e outra desordenada.
+	•	Insere cada elemento da parte desordenada na posição correta na parte ordenada.
+	•	Usa loops com deslocamento de elementos.
+	•	Dica para identificar:
+Procure um loop com deslocamento para inserir o elemento na posição correta:
+
+int key = array[i];
+j = i - 1;
+while (j >= 0 && array[j] > key) {
+    array[j + 1] = array[j];
+    j--;
+}
+array[j + 1] = key;
+
+4. Merge Sort
+	•	Características:
+	•	Abordagem de divisão e conquista.
+	•	Divide o array em partes menores, ordena cada parte recursivamente e depois as combina.
+	•	Sempre usa recursão.
+	•	Dica para identificar:
+Procure funções recursivas e a combinação de subarrays:
+
+mergeSort(array, left, mid);
+mergeSort(array, mid + 1, right);
+merge(array, left, mid, right);
+
+5. Quick Sort
+	•	Características:
+	•	Escolhe um pivô.
+	•	Reorganiza os elementos em torno do pivô (menores à esquerda, maiores à direita).
+	•	Aplica recursão para ordenar as subpartes.
+	•	Dica para identificar:
+Procure a função de particionamento e a recursão:
+
+int pivot = partition(array, low, high);
+quickSort(array, low, pivot - 1);
+quickSort(array, pivot + 1, high);
+
+6. Heap Sort
+	•	Características:
+	•	Usa a estrutura de dados heap (árvore binária máxima ou mínima).
+	•	Constrói o heap e ajusta a estrutura para ordenar os elementos.
+	•	Sempre trabalha com operações como “heapify”.
+	•	Dica para identificar:
+Procure pela função heapify e o uso do heap:
+
+buildHeap(array, n);
+for (i = n - 1; i >= 0; i--) {
+    swap(array[0], array[i]);
+    heapify(array, i, 0);
+}
+
+7. Counting Sort
+	•	Características:
+	•	Conta a frequência de cada elemento.
+	•	Usa um array auxiliar para armazenar essas contagens.
+	•	Calcula as posições dos elementos com base na contagem.
+	•	Dica para identificar:
+Procure por contagem de elementos em um array auxiliar:
+
+count[array[i]]++;
+for (i = 1; i < k; i++) {
+    count[i] += count[i - 1];
+}
+
+8. Radix Sort
+	•	Características:
+	•	Ordena os números dígito por dígito.
+	•	Usa um algoritmo estável como Counting Sort para cada dígito.
+	•	Trabalha com potências de 10 (base decimal).
+	•	Dica para identificar:
+Procure por iteração baseada em dígitos:
+
+for (exp = 1; max / exp > 0; exp *= 10) {
+    countingSort(array, n, exp);
+}
+
+9. Bucket Sort
+	•	Características:
+	•	Divide os elementos em “baldes” (buckets).
+	•	Ordena cada balde individualmente (geralmente com Insertion Sort).
+	•	Combina os baldes.
+	•	Dica para identificar:
+Procure pela criação de baldes e iteração sobre eles:
+
+for (i = 0; i < n; i++) {
+    bucket[index].push(array[i]);
+}
+
+Resumo prático:
+	•	Troca adjacente: Bubble Sort.
+	•	Busca do menor elemento: Selection Sort.
+	•	Inserção em ordem: Insertion Sort.
+	•	Divisão e conquista com recursão: Merge Sort ou Quick Sort.
+	•	Uso de heap: Heap Sort.
+	•	Contagem de frequências: Counting Sort.
+	•	Ordenação por dígitos: Radix Sort.
+	•	Divisão em baldes: Bucket Sort.
