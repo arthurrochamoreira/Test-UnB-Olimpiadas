@@ -25,6 +25,6 @@ int main(){
 }
 
 //resposta = 11
-
+//O(n²)
 //nc = tonlia
 //Bubble Sort
