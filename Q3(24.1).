@@ -21,3 +21,4 @@ int main(){
 }
 
 //resultado = 5
+//O(1)
