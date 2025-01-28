@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+// Função Q1 fornecida
+int Q1(char *Nome, int qtde) {
+    int pc = 0;
+    if (*Nome == '\0')
+        return qtde;
+    while (Nome[pc] != '\0')
+        pc++;
+    return Q1(Nome + 1, qtde + pc);
+}
+
+int main() {
+    char Nome[] = "moreira"; // Nome fixo
+    int resultado;
+
+    // Chamando a função Q1
+    resultado = Q1(Nome, 0);
+
+    // Exibindo o resultado
+    printf("Resultado da função Q1 para o nome '%s': %d\n", Nome, resultado);
+
+    return 0;
+}
+
+// Resultado da função Q1 para o nome 'moreira': 28
+// Resultado da função Q1 para o nome 'altino arthur rocha moreira': 378
