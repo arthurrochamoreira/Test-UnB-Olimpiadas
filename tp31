@@ -1,4 +1,19 @@
-
+TABPNo* alocaNo(TABPNo* root, int age, int index) {
+    if (root == NULL) {
+        TABPNo* novoNo = (TABPNo*)malloc(sizeof(TABPNo));
+        novoNo->age = age;
+        novoNo->index = index;
+        novoNo->left = NULL;
+        novoNo->right = NULL;
+        return novoNo;
+    }
+    if (age < root->age) {
+        root->left = alocaNo(root->left, age, index);
+    } else {
+        root->right = alocaNo(root->right, age, index);
+    }
+    return root;
+}
 
 void PrintRelatorio(TABPNo* root)
 {
