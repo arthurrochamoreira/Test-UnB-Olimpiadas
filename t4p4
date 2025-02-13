@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definição da estrutura de um nó da Árvore Binária de Pesquisa (ABP)
+typedef struct node {
+    int Num; // Valor armazenado no nó
+    struct node *Esq; // Ponteiro para o filho esquerdo
+    struct node *Dir; // Ponteiro para o filho direito
+} TABP;
+
+// Função para inserir um novo nó na ABP
+TABP* inserir(TABP *raiz, int num) {
+    if (raiz == NULL) {
+        // Criando um novo nó caso a raiz seja NULL
+        TABP *novoNo = (TABP*) malloc(sizeof(TABP));
+        novoNo->Num = num;
+        novoNo->Esq = novoNo->Dir = NULL;
+        return novoNo;
+    } else if (num < raiz->Num) {
+        raiz->Esq = inserir(raiz->Esq, num); // Inserção recursiva à esquerda
+    } else {
+        raiz->Dir = inserir(raiz->Dir, num); // Inserção recursiva à direita
+    }
+    return raiz; // Retorna a raiz para manter a estrutura da árvore
+}
+
+// Função para buscar um nó na ABP
+TABP* buscar(TABP *raiz, int valor) {
+    if (raiz == NULL || raiz->Num == valor) {
+        return raiz; // Retorna o nó se encontrado ou NULL caso contrário
+    } else if (valor < raiz->Num) {
+        return buscar(raiz->Esq, valor); // Busca recursiva na subárvore esquerda
+    } else {
+        return buscar(raiz->Dir, valor); // Busca recursiva na subárvore direita
+    }
+}
+
+// Função para liberar os nós da ABP e desalocar a memória utilizada
+void liberarArvore(TABP *raiz) {
+    if (raiz != NULL) {
+        liberarArvore(raiz->Esq); // Libera a subárvore esquerda primeiro
+        liberarArvore(raiz->Dir); // Libera a subárvore direita depois
+        free(raiz); // Libera o nó atual para evitar vazamento de memória
+    }
+}
+
+// Função para carregar os dados de um arquivo e inserir na ABP
+TABP* carregarDados(const char *nomeArquivo) {
+    TABP *raiz = NULL;
+    int num;
+    FILE *file = fopen(nomeArquivo, "r"); // Abre o arquivo em modo de leitura
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return NULL;
+    }
+    while (fscanf(file, "%d", &num) != EOF) {
+        raiz = inserir(raiz, num); // Insere cada número lido na árvore
+    }
+    fclose(file); // Fecha o arquivo após a leitura
+    return raiz;
+}
+
+// Função para imprimir os valores da ABP em ordem crescente (caminhamento in-order)
+void imprimirInOrder(TABP *raiz) {
+    if (raiz != NULL) {
+        imprimirInOrder(raiz->Esq); // Percorre primeiro a subárvore esquerda
+        printf("%d ", raiz->Num); // Imprime o valor do nó atual
+        imprimirInOrder(raiz->Dir); // Depois percorre a subárvore direita
+    }
+}
+
+// Função para exibir o menu de opções
+void exibirMenu() {
+    printf("\nMenu de Opções:\n");
+    printf("1. Carregar Dados\n");
+    printf("2. Buscar Valor\n");
+    printf("3. Imprimir\n");
+    printf("4. Encerrar\n");
+}
+
+int main() {
+    TABP *raiz = NULL; // Ponteiro inicial para a árvore (vazia)
+    int opcao, valor;
+    char nomeArquivo[100];
+
+    do {
+        exibirMenu();
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+        
+        switch (opcao) {
+            case 1:
+                printf("Digite o nome do arquivo para carregar os números: ");
+                scanf("%s", nomeArquivo);
+                raiz = carregarDados(nomeArquivo); // Chama a função para carregar os dados do arquivo
+                break;
+            case 2:
+                printf("Digite o valor a ser buscado: ");
+                scanf("%d", &valor);
+                TABP *resultado = buscar(raiz, valor);
+                if (resultado != NULL) {
+                    printf("Valor encontrado: %d\n", resultado->Num);
+                } else {
+                    printf("Valor não encontrado.\n");
+                }
+                break;
+            case 3:
+                imprimirInOrder(raiz); // Imprime os valores da árvore em ordem
+                break;
+            case 4:
+                liberarArvore(raiz); // Libera a memória alocada para a árvore
+                printf("Árvore desalocada e programa encerrado.\n");
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    } while (opcao != 4);
+    
+    return 0;
+}
