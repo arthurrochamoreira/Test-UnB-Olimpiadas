@@ -1,0 +1,133 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Estrutura dos registros do dataset de pessoas
+typedef struct {
+    char name[100];
+    int age;
+} TPessoa;
+
+// Estrutura do nó da árvore ABP
+typedef struct TABPNo {
+    int age;
+    int index; // Posição no dataset de pessoas
+    struct TABPNo *left;
+    struct TABPNo *right;
+} TABPNo;
+
+// Função para alocar um nó na árvore ABP
+TABPNo* alocaNo(TABPNo* root, int age, int index) {
+    if (root == NULL) {
+        TABPNo* novoNo = (TABPNo*)malloc(sizeof(TABPNo));
+        novoNo->age = age;
+        novoNo->index = index;
+        novoNo->left = NULL;
+        novoNo->right = NULL;
+        return novoNo;
+    }
+    if (age < root->age) {
+        root->left = alocaNo(root->left, age, index);
+    } else {
+        root->right = alocaNo(root->right, age, index);
+    }
+    return root;
+}
+
+// Função Fill: Gera uma ABP a partir de um dataset
+TABPNo* Fill(TPessoa dataset[], int qtRegistros) {
+    TABPNo* root = NULL;
+    for (int i = 0; i < qtRegistros; i++) {
+        root = alocaNo(root, dataset[i].age, i);
+    }
+    return root;
+}
+
+// Função para imprimir o relatório por ordem de idade
+void PrintRelatorio(TABPNo* root, TPessoa dataset[]) {
+    if (root != NULL) {
+        PrintRelatorio(root->left, dataset);
+        printf("Idade: %d, Nome: %s\n", root->age, dataset[root->index].name);
+        PrintRelatorio(root->right, dataset);
+    }
+}
+
+// Função de busca de uma idade na ABP
+TABPNo* Busca(TABPNo* root, int age) {
+    if (root == NULL || root->age == age)
+        return root;
+    if (age < root->age)
+        return Busca(root->left, age);
+    return Busca(root->right, age);
+}
+
+// Função para desalocar todos os nós da ABP
+int DesalocaABP(TABPNo* root) {
+    if (root == NULL)
+        return 0;
+    int count = 1;
+    count += DesalocaABP(root->left);
+    count += DesalocaABP(root->right);
+    free(root);
+    return count;
+}
+
+int main() {
+    TABPNo* root;
+    int idade, qtNosDesalocados;
+    char fonteDados;
+
+    // Exemplo de dataset
+    TPessoa datasetA[] = {
+        {"Ana_Silva", 22}, {"Bruno_Santos", 19}, {"Carlos_Oliveira", 25},
+        {"Diana_Pereira", 18}, {"Eduardo_Costa", 23}, {"Fatima_Ribeiro", 20},
+        {"Gabriela_Santos", 48}, {"Helena_Martins", 50}, {"Igor_Sousa", 21},
+        {"Julia_Ferreira", 24}
+    };
+
+    TPessoa datasetD[] = {
+        {"Fernando_Costa", 52}, {"Gabriela_Santos", 48}, {"Henrique_Silva", 55},
+        {"Isabel_Oliveira", 46}, {"Jorge_Ribeiro", 51}, {"Kelly_Almeida", 47},
+        {"Leonardo_Martins", 54}, {"Monica_Pereira", 49}, {"Nuno_Ferreira", 50},
+        {"Otavia_Sousa", 53}
+    };
+
+    // Escolha do dataset com base na entrada do usuário
+    scanf(" %c", &fonteDados);
+    if (fonteDados == 'A') {
+        root = Fill(datasetA, 10);
+    } else {
+        root = Fill(datasetD, 10);
+    }
+
+    // Leitura da idade para busca
+    scanf("%d", &idade);
+
+    // Impressão do relatório
+    if (fonteDados == 'A') {
+        printf("=== RELATORIO  ===\n");
+        PrintRelatorio(root, datasetA);
+    } else {
+        printf("=== RELATORIO  ===\n");
+        PrintRelatorio(root, datasetD);
+    }
+
+    // Busca da idade na ABP
+    TABPNo* No = Busca(root, idade);
+    printf("\n=== BUSCA  ===\n");
+    if (No != NULL) {
+        if (fonteDados == 'A') {
+            printf("Encontrado: %s\n", datasetA[No->index].name);
+        } else {
+            printf("Encontrado: %s\n", datasetD[No->index].name);
+        }
+    } else {
+        printf("Idade %d não encontrada!\n", idade);
+    }
+
+    // Desalocar a ABP e contar o número de nós desalocados
+    qtNosDesalocados = DesalocaABP(root);
+    printf("\nNúmero de nós desalocados: %d\n", qtNosDesalocados);
+
+    return 0;
+}
