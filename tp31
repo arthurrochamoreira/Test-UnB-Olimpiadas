@@ -1,0 +1,46 @@
+
+
+void PrintRelatorio(TABPNo* root)
+{
+    if (root == NULL) return;
+
+    PrintRelatorio(root->left);
+    printf("Idade: %d, Nome: %s\n", root->pessoa->age, root->pessoa->name);
+    PrintRelatorio(root->right);
+}
+
+int DesalocaABP(TABPNo* root)
+{
+    if (root == NULL) return 0;
+
+    int count = DesalocaABP(root->left) + DesalocaABP(root->right) + 1;
+    free(root);
+    return count;
+}
+
+
+TABPNo* Busca(TABPNo* root, int age)
+{
+    if (root == NULL || root->age == age)
+        return root;
+    
+    if (age < root->age)
+        return Busca(root->left, age);
+    
+    return Busca(root->right, age);
+}
+
+void PrintRelatorio(TABPNo* root) {
+    if (root == NULL) {
+        return;
+    }
+
+    // Primeiro, imprime a subárvore da esquerda (idades menores)
+    PrintRelatorio(root->left);
+
+    // Imprime o nó atual (idade e índice)
+    printf("Idade: %d, Nome: %s\n", root->age, Data[root->index].name);
+
+    // Depois, imprime a subárvore da direita (idades maiores)
+    PrintRelatorio(root->right);
+}
