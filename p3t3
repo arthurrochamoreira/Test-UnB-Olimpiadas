@@ -1,0 +1,59 @@
+/*
+Analise as afirmacoes referentes as estrutura de dados basica
+1. Uma lista linear X é uma sequencia de zero ou mais itens x1, x2, ..., xn. onde xi é de um determinado tipo e n representa o tamanho de X.
+2. Uma pilha é uma lista linear em que as insercoes, consultas e retiradas sao feitas em apenas um extremo da lista
+3. uma fila é uma lista linear em que todas as insercoes sao realizadas em um extremo da lista e todos os acessos e retiradas sao realizadas no outro extremo da lista.
+
+(a) 1 e 2 estao corretas <- certa
+(b) 1 e 3 estao corretas
+(c) 2 e 3 estao corretas
+(d) todas estao corretas
+(e) NDA
+
+*/
+
+/*
+As listas encadeadas simples são normalmente utilizadas para relacionar itens que precisam ser exibidos ou manipulados por meio de estruturas dinâmicas.
+Em relação à manipulação de uma lista encadeada simples, analise os itens:
+
+1. A inclusão de um elemento em uma lista encadeada simples pode ser realizada somente no início e no final da lista.
+
+2. Um elemento de uma lista encadeada simples só pode ser excluído no início e no final da lista.
+
+3. Uma lista encadeada simples (sem descritor) está vazia se ela aponta para nulo.
+
+4. A complexidade  de inserção na cauda de uma lista encadeada simples sem descritoré O(n).
+
+5. a complexidade de exclusao na cabeca de uma lista encadeada simples sem descritor é O(1).
+
+(a) 1 e 2 estao corretas 
+(b) 1 e 3 estao corretas
+(c) 3,4 e 5 estao corretas <- certa
+(d) todas estao corretas
+(e) NDA
+
+*/
+
+/*
+Assinale as sentenças abaixo sobre Árvore Binária de Busca (ABB) com V (para verdadeiro) ou F (para falso):
+
+(a) Uma ABB é uma estrutura de dados na qual cada nó tem no máximo dois filhos. <- V
+(b) Em uma ABB contendo chaves únicas, o filho esquerdo de um nó sempre contém uma chave menor que a chave do nó pai. <- F
+(c) A altura de uma ABB é sempre igual ao número de nós na árvore. <- V
+(d) A remoção de um nó em uma ABB Balanceada pode exigir a reorganização da estrutura da árvore. <- V
+
+*/
+
+/*
+
+Assinale as sentenças abaixo com V (para verdadeiro) ou F (para falso):
+
+(a) A operação de inserção em uma pilha tem complexidade 𝑂(1) <- V
+(b) A operação de remoção em uma fila tem complexidade 𝑂(1) <- V
+(c) A operação de busca em uma árvore binária de busca balanceada tem complexidade O(logn), onde n é o número de nós na árvore. <- V
+(d) A operação de inserção em uma árvore binária de busca balanceada tem complexidade O(logn), onde n é o número de nós na árvore. <- V
+(e) A operação de remoção em uma árvore binária de busca tem complexidade 𝑂(log⁡n), onde n é o número de nós na árvore. <- V
+
+
+*/
+
